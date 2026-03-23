@@ -1,67 +1,26 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7_impinviir.h"
+/* Includes ------------------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define SOURCE_FILE_NAME          "stm32f7_fir_impinviir.c"
+#define SOURCE_FILE_NAME          "this is a test from akash"
 #define AUDIO_FREQ                AUDIO_FREQUENCY_16K
-#define AUDIO_IN_BIT_RES          16u
-#define AUDIO_IN_CHANNEL_NBR      2u      
-#define BLOCK_SAMPLES_PER_CH      512u    
-#define BLOCK_SAMPLES_TOTAL       (BLOCK_SAMPLES_PER_CH * AUDIO_IN_CHANNEL_NBR)
-#define BUF_SAMPLES               (BLOCK_SAMPLES_TOTAL * 2u) 
+
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static __attribute__((aligned(32))) int16_t InBuf[BUF_SAMPLES];
-static __attribute__((aligned(32))) int16_t OutBuf[BUF_SAMPLES];
 
-static float32_t xn;
-static float32_t yn;
-
-static float32_t xn1 = 0.0;
-static float32_t yn1 = 0.0;
-static float32_t yn2 = 0.0;
 
 /* Private function prototypes -----------------------------------------------*/
 static void MPU_Config(void);
 static void SystemClock_Config(void);
 static void CPU_CACHE_Enable(void);
 static void Error_Handler(void);
-static void Process_IIR(const int16_t *in, int16_t *out, uint32_t length);
-void BSP_AUDIO_OUT_ClockConfig(SAI_HandleTypeDef *hsai, uint32_t AudioFreq, void *Params);
+
 
 /* Private functions ---------------------------------------------------------*/
-void BSP_AUDIO_IN_HalfTransfer_CallBack(void)
-{
-  Process_IIR(InBuf, OutBuf, BLOCK_SAMPLES_TOTAL);
-}
 
-void BSP_AUDIO_IN_TransferComplete_CallBack(void)
-{
-  Process_IIR(InBuf + BLOCK_SAMPLES_TOTAL, OutBuf + BLOCK_SAMPLES_TOTAL, BLOCK_SAMPLES_TOTAL);
-}
-
-static void Process_IIR(const int16_t *in, int16_t *out, uint32_t length)
-{
-  for (uint32_t i = 0; i < length; i += AUDIO_IN_CHANNEL_NBR)
-  {
-    xn = in[i];
-    /**********************************************************************
-      insert code to compute new output sample here, i.e.
-      y(n) = 0.241275x(n-1) + 1.40067718y(n-1) - 0.62282680y(n-2)
-      also update stored previous sample values, i.e.
-      y(n-2), y(n-1), and x(n-1)
-    **********************************************************************/
-
-    yn = 0.241275f * xn1 + 1.40067718f * yn1 - 0.62282670f * yn2;
-    yn2 = yn1;
-    yn1 = yn;
-    xn1 = xn;
-    out[i + 0] = (int16_t)(yn);
-    out[i + 1] = out[i + 0];
-  }
-}
 
 int main(void)
 {
@@ -78,31 +37,6 @@ int main(void)
 	
 	stm32f7_LCD_init(AUDIO_FREQ, SOURCE_FILE_NAME, NOGRAPH);
 
-  if (BSP_AUDIO_IN_OUT_Init(INPUT_DEVICE_INPUT_LINE_1,
-                            OUTPUT_DEVICE_HEADPHONE,
-                            AUDIO_FREQ,
-                            AUDIO_IN_BIT_RES,
-                            AUDIO_IN_CHANNEL_NBR) != AUDIO_OK)
-  {
-    Error_Handler();
-  }
-	
-	BSP_AUDIO_IN_SetVolume(83);
-	BSP_AUDIO_OUT_SetVolume(83);
-	
-  BSP_AUDIO_OUT_SetAudioFrameSlot(CODEC_AUDIOFRAME_SLOT_02);
-
-  if (BSP_AUDIO_OUT_Play((uint16_t*)OutBuf, sizeof(OutBuf)) != AUDIO_OK)
-  {
-    Error_Handler();
-  }
-
-  /* Start IN with ping-pong buffer. Size is in HALF-WORDS (uint16_t). */
-  if (BSP_AUDIO_IN_Record((uint16_t*)InBuf, BUF_SAMPLES) != AUDIO_OK)
-  {
-    Error_Handler();
-  }
-	
   /* Infinite loop */
   while (1);
 }

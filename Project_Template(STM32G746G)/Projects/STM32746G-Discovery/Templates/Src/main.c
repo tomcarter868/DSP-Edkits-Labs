@@ -18,6 +18,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stm32f7_display.h"
 
 /** @addtogroup STM32F7xx_HAL_Examples
   * @{
@@ -71,7 +72,9 @@ int main(void)
 
   /* Add your application code here
      */
-
+		 #define SOURCE_FILE_NAME          "TEST"
+     #define AUDIO_FR                ((uint32_t)16000)
+    stm32f7_LCD_init(AUDIO_FR, SOURCE_FILE_NAME, NOGRAPH);
 
   /* Infinite loop */
   while (1)

@@ -14,16 +14,16 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32F746NGHx</Device>
-          <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F7xx_DFP.3.0.0</PackID>
+          <Device>ARMCM7</Device>
+          <Vendor>ARM</Vendor>
+          <PackID>ARM.Cortex_DFP.1.1.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
-          <Cpu>IROM(0x08000000-0x080FFFFF) IRAM(0x20000000-0x2004FFFF) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ELITTLE</Cpu>
+          <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll></FlashDriverDll>
-          <DeviceId></DeviceId>
-          <RegisterFile></RegisterFile>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</FlashDriverDll>
+          <DeviceId>0</DeviceId>
+          <RegisterFile>$$Device:ARMCM7$Device\ARMCM7\Include\ARMCM7.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32F746NGHx$CMSIS\SVD\STM32F7x.svd</SFDFile>
+          <SFDFile></SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -110,11 +110,11 @@
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments>-REMAP -MPU</SimDllArguments>
+          <SimDllArguments>  -MPU</SimDllArguments>
           <SimDlgDll>DCM.DLL</SimDlgDll>
           <SimDlgDllArguments>-pCM7</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments>-MPU</TargetDllArguments>
+          <TargetDllArguments> -MPU</TargetDllArguments>
           <TargetDlgDll>TCM.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM7</TargetDlgDllArguments>
         </DllOption>
@@ -137,8 +137,8 @@
             <DriverSelection>4103</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -183,7 +183,7 @@
             <hadIRAM>1</hadIRAM>
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
-            <RvdsVP>2</RvdsVP>
+            <RvdsVP>3</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
@@ -191,7 +191,7 @@
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
-            <EndSel>0</EndSel>
+            <EndSel>1</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
@@ -247,12 +247,12 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x50000</Size>
+                <Size>0x20000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
-                <StartAddress>0x8000000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x40000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -276,8 +276,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x200000</StartAddress>
-                <Size>0x100000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x40000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -302,7 +302,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x50000</Size>
+                <Size>0x20000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -835,6 +835,16 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f7_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\stm32f7_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\system_stm32f7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -912,19 +922,19 @@
       <TargetName>STM32746G_Discovery_AXIM-FLASH</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32F746NGHx</Device>
+          <Device>STM32F746IGKx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F7xx_DFP.3.0.0</PackID>
+          <PackID>Keil.STM32F7xx_DFP.3.1.1</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
-          <Cpu>IROM(0x08000000-0x080FFFFF) IRAM(0x20000000-0x2004FFFF) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ELITTLE</Cpu>
+          <Cpu>IRAM(0x20000000,0x00010000) IRAM2(0x20010000,0x0003C000) IROM(0x08000000,0x00100000) IROM2(0x00200000,0x00100000) XRAM(0x2004C000,0x00004000) XRAM2(0x40024000,0x00001000) XRAM3(0x00000000,0x00004000) CPUTYPE("Cortex-M7") FPU3(SFPU) DSP CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll></FlashDriverDll>
-          <DeviceId></DeviceId>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20010000 -FC1000 -FN2 -FF0STM32F7x_1024 -FS08000000 -FL0100000 -FF1STM32F7xTCM_1024 -FS1200000 -FL1100000 -FP0($$Device:STM32F746IGKx$CMSIS\Flash\STM32F7x_1024.FLM) -FP1($$Device:STM32F746IGKx$CMSIS\Flash\STM32F7xTCM_1024.FLM))</FlashDriverDll>
+          <DeviceId>0</DeviceId>
           <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -935,7 +945,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32F746NGHx$CMSIS\SVD\STM32F7x.svd</SFDFile>
+          <SFDFile>$$Device:STM32F746IGKx$CMSIS\SVD\STM32F746.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -1012,11 +1022,11 @@
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments>-REMAP -MPU</SimDllArguments>
+          <SimDllArguments> -REMAP -MPU</SimDllArguments>
           <SimDlgDll>DCM.DLL</SimDlgDll>
           <SimDlgDllArguments>-pCM7</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments>-MPU</TargetDllArguments>
+          <TargetDllArguments> -MPU</TargetDllArguments>
           <TargetDlgDll>TCM.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM7</TargetDlgDllArguments>
         </DllOption>
@@ -1036,11 +1046,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4107</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3></Flash3>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -1083,21 +1093,21 @@
             <uocRam>0</uocRam>
             <hadIROM>1</hadIROM>
             <hadIRAM>1</hadIRAM>
-            <hadXRAM>0</hadXRAM>
+            <hadXRAM>1</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
-            <hadIRAM2>0</hadIRAM2>
-            <hadIROM2>0</hadIROM2>
+            <hadIRAM2>1</hadIRAM2>
+            <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
-            <RwSelD>3</RwSelD>
+            <RwSelD>4</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
@@ -1113,8 +1123,8 @@
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>1</Im1Chk>
-            <Im2Chk>0</Im2Chk>
+            <Im1Chk>0</Im1Chk>
+            <Im2Chk>1</Im2Chk>
             <OnChipMemories>
               <Ocm1>
                 <Type>0</Type>
@@ -1149,7 +1159,7 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x50000</Size>
+                <Size>0x10000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
@@ -1157,9 +1167,9 @@
                 <Size>0x100000</Size>
               </IROM>
               <XRAM>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Type>1</Type>
+                <StartAddress>0x2004c000</StartAddress>
+                <Size>0x4000</Size>
               </XRAM>
               <OCR_RVCT1>
                 <Type>1</Type>
@@ -1183,33 +1193,33 @@
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x200000</StartAddress>
+                <Size>0x100000</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x2004c000</StartAddress>
+                <Size>0x4000</Size>
               </OCR_RVCT6>
               <OCR_RVCT7>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x40024000</StartAddress>
+                <Size>0x1000</Size>
               </OCR_RVCT7>
               <OCR_RVCT8>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0x4000</Size>
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x50000</Size>
+                <Size>0x10000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x20010000</StartAddress>
+                <Size>0x3c000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector></RvctStartVector>
@@ -1242,7 +1252,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F746xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../../../../Drivers/CMSIS/Device/ST/STM32F7xx/Include;../../../../Drivers/STM32F7xx_HAL_Driver/Inc;../../../../Drivers/BSP/STM32746G-Discovery;../../../../Drivers/BSP/Components/Common;../../../../Drivers/BSP/Components/ft5336;../../../../Drivers/BSP/Components/ov9655;../../../../Drivers/BSP/Components/rk043fn48h;../../../../Drivers/BSP/Components/n25q128a;../../../../Drivers/BSP/Components/wm8994;../../../../Utilities/Log;../../../../Utilities/Fonts;../../../../Utilities/CPU</IncludePath>
+              <IncludePath>../Inc;../../../../Drivers/CMSIS/Device/ST/STM32F7xx/Include;../../../../Drivers/STM32F7xx_HAL_Driver/Inc;../../../../Drivers/BSP/STM32746G-Discovery;../../../../Drivers/BSP/Components/Common;../../../../Drivers/BSP/Components/ft5336;../../../../Drivers/BSP/Components/ov9655;../../../../Drivers/BSP/Components/rk043fn48h;../../../../Drivers/BSP/Components/n25q128a;../../../../Drivers/BSP/Components/wm8994;../../../../Utilities/Log;../../../../Utilities/Fonts;../../../../Utilities/CPU;..\..\..\..\Drivers\BSP\STM32746G-Discovery</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1686,6 +1696,16 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f7_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\stm32f7_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\system_stm32f7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1764,8 +1784,8 @@
   <RTE>
     <apis/>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.3.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.6.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.2.0" condition="ARMv6_7_8-M Device" ymlID="CMSIS:CORE">
+        <package name="CMSIS" schemaVersion="1.7.53" url="https://www.keil.com/pack/" vendor="ARM" version="6.3.0"/>
         <targetInfos>
           <targetInfo name="STM32746G_Discovery_AXIM-FLASH"/>
           <targetInfo name="STM32746G_Discovery_ITCM-FLASH"/>
