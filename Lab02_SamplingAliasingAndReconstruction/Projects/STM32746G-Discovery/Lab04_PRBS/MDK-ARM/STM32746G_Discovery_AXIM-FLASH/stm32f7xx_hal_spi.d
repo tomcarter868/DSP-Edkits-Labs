@@ -6,7 +6,7 @@ stm32746g_discovery_axim-flash/stm32f7xx_hal_spi.o: \
   ..\..\..\..\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_def.h \
   ..\..\..\..\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h \
   ..\..\..\..\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h \
-  C:\Users\jaecho01\AppData\Local\arm\packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm7.h \
+  C:\Users\akamal01\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include\core_cm7.h \
   ..\..\..\..\Drivers\CMSIS\Device\ST\STM32F7xx\Include\system_stm32f7xx.h \
   ..\..\..\..\Drivers\STM32F7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
   ..\..\..\..\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc_ex.h \
